@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turkish History II – Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <h1>Turkish History II</h1>
+        <button type="button" class="btn-list" id="langToggle">Türkçe</button>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="meta">
+        <div class="meta-left">
+          <span id="questionCounter">Question 1 / 25</span>
+          <button type="button" class="btn-meta-list" id="btnOpenList">All questions</button>
+        </div>
+        <span id="scoreDisplay">Score: 0</span>
+      </div>
+    </header>
+
+    <main id="quizArea">
+      <div class="question-card" id="questionCard">
+        <p class="question-text" id="questionText"></p>
+        <ul class="options" id="optionsList"></ul>
+        <div class="feedback" id="feedback"></div>
+        <button class="btn-next" id="btnNext" style="display:none">Next →</button>
+      </div>
+    </main>
+
+    <div class="result-screen" id="resultScreen" style="display:none">
+      <h2>Finished! 🎉</h2>
+      <p id="finalScore"></p>
+      <button class="btn-next" id="btnRestart">Restart</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <button type="button" class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
