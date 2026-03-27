@@ -112,91 +112,11 @@ function showResult() {
 loadQuestion();
 
 const langToggle = document.getElementById('langToggle');
-const btnOpenList = document.getElementById('btnOpenList');
-const modalOverlay = document.getElementById('modalOverlay');
-const modalClose = document.getElementById('modalClose');
-const modalBody = document.getElementById('modalBody');
 
 langToggle.addEventListener('click', () => {
   uiTurkish = !uiTurkish;
   langToggle.textContent = uiTurkish ? 'English' : 'Türkçe';
-  btnOpenList.textContent = uiTurkish ? 'Tüm sorular' : 'All questions';
   if (quizArea.style.display !== 'none') {
     updateQuestionLanguage();
   }
-  applyModalLanguage();
 });
-
-btnOpenList.addEventListener('click', () => {
-  buildModal();
-  modalOverlay.classList.add('open');
-});
-
-modalClose.addEventListener('click', () => modalOverlay.classList.remove('open'));
-
-modalOverlay.addEventListener('click', (e) => {
-  if (e.target === modalOverlay) modalOverlay.classList.remove('open');
-});
-
-function applyModalLanguage() {
-  if (!modalBody.hasChildNodes()) return;
-  modalBody.querySelectorAll('.q-item').forEach((item, i) => {
-    const q = questions[i];
-    if (!q) return;
-    const qEl = item.querySelector('.q-question-text');
-    if (qEl) {
-      qEl.textContent = uiTurkish && q.questionTR ? q.questionTR : q.question;
-    }
-    Object.entries(q.options).forEach(([letter, text]) => {
-      const optText = item.querySelector(`.q-opt[data-letter="${letter}"] .q-opt-text`);
-      if (!optText) return;
-      const tr = q.optionsTR && q.optionsTR[letter];
-      optText.textContent = uiTurkish && tr ? tr : text;
-    });
-  });
-}
-
-function buildModal() {
-  if (modalBody.hasChildNodes()) return;
-  questions.forEach((q, i) => {
-    const item = document.createElement('div');
-    item.className = 'q-item';
-
-    const header = document.createElement('div');
-    header.className = 'q-item-header';
-    const num = document.createElement('div');
-    num.className = 'q-num';
-    num.textContent = `Soru ${i + 1}`;
-    const qText = document.createElement('div');
-    qText.className = 'q-question-text q-en';
-    qText.textContent = q.question;
-    header.appendChild(num);
-    header.appendChild(qText);
-
-    const opts = document.createElement('div');
-    opts.className = 'q-options';
-
-    Object.entries(q.options).forEach(([letter, text]) => {
-      const opt = document.createElement('div');
-      opt.className = 'q-opt' + (letter === q.answer ? ' correct-opt' : '');
-      opt.dataset.letter = letter;
-      const letterSpan = document.createElement('span');
-      letterSpan.className = 'opt-letter';
-      letterSpan.textContent = letter.toUpperCase();
-      const textsWrap = document.createElement('span');
-      textsWrap.className = 'opt-texts';
-      const optText = document.createElement('span');
-      optText.className = 'q-opt-text opt-text-en';
-      optText.textContent = text;
-      textsWrap.appendChild(optText);
-      opt.appendChild(letterSpan);
-      opt.appendChild(textsWrap);
-      opts.appendChild(opt);
-    });
-
-    item.appendChild(header);
-    item.appendChild(opts);
-    modalBody.appendChild(item);
-  });
-  applyModalLanguage();
-}
